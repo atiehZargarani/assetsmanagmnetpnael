@@ -33,11 +33,12 @@ export default function AppNewsUpdate({ title, subheader, list, ...other }) {
 
       <Box sx={{ p: 2, textAlign: 'right' }}>
         <Button
+        href='/blog'
           size="small"
           color="inherit"
           endIcon={<Iconify icon="eva:arrow-ios-forward-fill" />}
         >
-          View all
+         مشاهده همه
         </Button>
       </Box>
     </Card>
@@ -75,7 +76,7 @@ function NewsItem({ news }) {
       </Box>
 
       <Typography variant="caption" sx={{ pr: 3, flexShrink: 0, color: 'text.secondary' }}>
-        {fToNow(postedAt)}
+        {postedAt}
       </Typography>
     </Stack>
   );
@@ -86,6 +87,6 @@ NewsItem.propTypes = {
     image: PropTypes.string,
     title: PropTypes.string,
     description: PropTypes.string,
-    postedAt: PropTypes.instanceOf(Date),
+    postedAt: PropTypes.string,
   }),
 };

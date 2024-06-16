@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker';
+import React, {  useState , useEffect} from "react";
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
@@ -8,7 +9,6 @@ import Iconify from 'src/components/iconify';
 
 import AppTasks from '../app-tasks';
 import AppNewsUpdate from '../app-news-update';
-import AppOrderTimeline from '../app-order-timeline';
 import AppWebsiteVisits from '../app-website-visits';
 import AppWidgetSummary from '../app-widget-summary';
 import AppTrafficBySite from '../app-traffic-by-site';
@@ -17,7 +17,30 @@ import AppTrafficBySite from '../app-traffic-by-site';
 
 // ----------------------------------------------------------------------
 
+
+
 export default function AppView() {
+
+ const [newBlogs, setNewBlogs] = useState([])
+  useEffect(() => {
+      fetch("http://localhost:1337/api/blogs?populate=*", {
+      headers: {
+        'Content-type': 'application/json',
+  
+      },
+    })
+      .then((res) =>res.json())
+      .then((data) => {
+        console.log("data",data.data);
+        setNewBlogs(data.data)
+        console.log("newBlogs",newBlogs);
+      })
+  
+  }, [])
+
+
+console.log("kgar",newBlogs)
+
   return (
     <Container maxWidth="xl">
       <Typography variant="h4" sx={{ mb: 5 }}>
@@ -152,20 +175,20 @@ export default function AppView() {
           />
         </Grid> */}
 
-        <Grid xs={12} md={6} lg={8}>
+        <Grid xs={12} md={12} lg={12}>
           <AppNewsUpdate
             title="جدید ترین مقالات"
-            list={[...Array(5)].map((_, index) => ({
-              id: faker.string.uuid(),
-              title: faker.person.jobTitle(),
-              description: faker.commerce.productDescription(),
-              image: `/assets/images/covers/cover_${index + 1}.jpg`,
-              postedAt: faker.date.recent(),
+            list={newBlogs.map((blog, index) => ({
+              id: blog.id,
+              title:blog.attributes.bName,
+              description:blog.attributes.bDesc,
+              image:"http://localhost:1337"+blog.attributes.bImg.data.attributes.url,
+              postedAt:blog.attributes.bDate,
             }))}
           />
         </Grid>
 
-        <Grid xs={12} md={6} lg={4}>
+        {/* <Grid xs={12} md={6} lg={4}>
           <AppOrderTimeline
             title="Order Timeline"
             list={[...Array(5)].map((_, index) => ({
@@ -181,45 +204,49 @@ export default function AppView() {
               time: faker.date.past(),
             }))}
           />
-        </Grid>
+        </Grid> */}
 
-        <Grid xs={12} md={6} lg={4}>
+        <Grid xs={12} md={6} lg={5}>
           <AppTrafficBySite
-            title="Traffic by Site"
+            title="شبکه های اجتماعی "
+            subheader="با دنبال کردن شبکه های اجتماعی ما از آخرین تغییرات پنل باخبر شوید"
             list={[
               {
                 name: 'FaceBook',
-                value: 323234,
+              
+                value:"https://pardis.facebook.com",
                 icon: <Iconify icon="eva:facebook-fill" color="#1877F2" width={32} />,
               },
               {
                 name: 'Google',
-                value: 341212,
+                value: "pardis@gmail.com",
                 icon: <Iconify icon="eva:google-fill" color="#DF3E30" width={32} />,
               },
               {
                 name: 'Linkedin',
-                value: 411213,
+                value: "www.linkedin.com/in/pardis",
                 icon: <Iconify icon="eva:linkedin-fill" color="#006097" width={32} />,
               },
               {
                 name: 'Twitter',
-                value: 443232,
+                value: "@pardis",
                 icon: <Iconify icon="eva:twitter-fill" color="#1C9CEA" width={32} />,
               },
             ]}
           />
         </Grid>
 
-        <Grid xs={12} md={6} lg={8}>
+        <Grid xs={12} md={6} lg={7} sx={{height:"100%"}}>
           <AppTasks
-            title="Tasks"
+            title="کارهای امروز"
             list={[
-              { id: '1', name: 'Create FireStone Logo' },
-              { id: '2', name: 'Add SCSS and JS files if required' },
-              { id: '3', name: 'Stakeholder Meeting' },
-              { id: '4', name: 'Scoping & Estimations' },
-              { id: '5', name: 'Sprint Showcase' },
+              { id: '1', name: 'اضافه کردن کاربران جدید' },
+              { id: '2', name: 'حذف اموال قدیمی' },
+              { id: '3', name: 'خواندن مقالات جدید' },
+              { id: '4', name: 'اتمام ویرایش کابران' },
+              { id: '5', name: 'ویرایش آواتار' },
+              { id: '6', name: 'چک کردن شبکه های مجازی' },
+            
             ]}
           />
         </Grid>

@@ -120,7 +120,7 @@ export default function Nav({ openNav, onCloseNav }) {
       }}
     >
       <Logo  />
-      <Typography >پنل مدیریت اموال</Typography>
+      <Typography >پنل مدیریت اموال پردیس</Typography>
 
     </Box>
       
