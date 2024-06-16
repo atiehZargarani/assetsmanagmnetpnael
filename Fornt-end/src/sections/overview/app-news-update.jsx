@@ -23,8 +23,8 @@ export default function AppNewsUpdate({ title, subheader, list, ...other }) {
 
       <Scrollbar>
         <Stack spacing={3} sx={{ p: 3, pr: 0 }}>
-          {list.map((news) => (
-            <NewsItem key={news.id} news={news} />
+          {list.map((news,index) => (
+          <NewsItem key={news.id} news={news} />
           ))}
         </Stack>
       </Scrollbar>

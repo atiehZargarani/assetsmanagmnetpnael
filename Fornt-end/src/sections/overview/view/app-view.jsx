@@ -23,10 +23,10 @@ export default function AppView() {
 
  const [newBlogs, setNewBlogs] = useState([])
   useEffect(() => {
-      fetch("http://localhost:1337/api/blogs?populate=*", {
+      fetch("http://localhost:1337/api/blogs?populate=*&pagination[limit]=3", {
       headers: {
         'Content-type': 'application/json',
-  
+        
       },
     })
       .then((res) =>res.json())
