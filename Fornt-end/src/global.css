@@ -1,0 +1,12 @@
+/* scrollbar */
+@import 'simplebar-react/dist/simplebar.min.css';
+
+@font-face {
+    font-family: vazir;
+    src: url("../public/Assets/Fonts/Vazir.woff") format("woff");
+    src: url('../public/Assets/Fonts/Vazir.eot');
+    src: url('../public/Assets/Fonts/Vazir.eot?#iefix') format('embedded-opentype'),
+      url('../public/Assets/Fonts/Vazir.woff2') format('woff2'),
+      url('../public/Assets/Fonts/Vazir.woff') format('woff'),
+      url('../public/Assets/Fonts/Vazir.ttf') format('truetype');
+  }
