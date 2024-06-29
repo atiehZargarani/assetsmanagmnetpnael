@@ -4,7 +4,8 @@
   "info": {
     "singularName": "assets",
     "pluralName": "assets-tables",
-    "displayName": "AssetsTable"
+    "displayName": "AssetsTable",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -16,6 +17,16 @@
     },
     "Ainventory": {
       "type": "boolean"
+    },
+    "Aimage": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }

@@ -174,14 +174,19 @@ export default function UserPage() {
   }, []);
 
   const [form, setForm] = useState({
-    Uname: 'test',
-    Uposition: 'کاربر معمولی',
-    Ustatus: true,
-    Uassets: 'برگه های اداری',
+    Uname: null,
+    Uposition: null,
+    Ustatus: null,
+    Uassets: null,
   });
 
 const addUser=()=>{
   console.log("form",form)
+  axios.post("http://localhost:1337/api/tableuser",{data:form}).then(res => {
+          
+    handleClose()
+    getUsers()
+}).catch(e =>  console.log("show me err",e))
 }
   return (
     <Container>
@@ -278,12 +283,12 @@ const addUser=()=>{
                     sx={{ textAlign: 'right', width: '100%', my: 2 }}
                     size="small"
                     variant="outlined"
-                    onChange={(e)=>{setForm({Uname:e.target.value})}}
+                    onChange={(e)=>{setForm({...form,Uname:e.target.value})}}
                   />
                 </div>
                 <div>
                   <label>سمت :</label>
-                  <TextField  size='small' onChange={(e)=>{setForm({Uposition:e.target.value})}} select sx={{ textAlign: 'right', width: '100%', my: 2 }}>
+                  <TextField defaultValue={''} size='small' onChange={(e)=>{setForm({...form,Uposition:e.target.value})}} select sx={{ textAlign: 'right', width: '100%', my: 2 }}>
                     {positionList.map((option, index) => (
                       <MenuItem key={index} value={option.value}>
                         {option.label}
@@ -293,7 +298,7 @@ const addUser=()=>{
                 </div>
                 <div>
                   <label>اموال :</label>
-                  <TextField size='small' select onChange={(e)=>{setForm({Uassets:e.target.value})}} sx={{ textAlign: 'right', width: '100%', my: 2 }}>
+                  <TextField defaultValue={''} size='small' select onChange={(e)=>{setForm({...form,Uassets:e.target.value})}} sx={{ textAlign: 'right', width: '100%', my: 2 }}>
                     {assetsList.map((asset, index) => (
                       <MenuItem key={index} value={asset.attributes.Aname}>
                         {asset.attributes.Aname}
@@ -303,7 +308,7 @@ const addUser=()=>{
                 </div>
                    <div>
                   <label>وضعیت :</label>
-                  <TextField size='small' onChange={(e)=>{setForm({Ustatus:e.target.value})}} select sx={{ textAlign: 'right', width: '100%', my: 2 }}>
+                  <TextField defaultValue={''} size='small' onChange={(e)=>{setForm({...form,Ustatus:e.target.value})}} select sx={{ textAlign: 'right', width: '100%', my: 2 }}>
                   
                       <MenuItem  value={false}>
                         غیرفعال

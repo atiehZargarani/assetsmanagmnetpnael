@@ -362,96 +362,6 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiAssetsAssets extends Schema.CollectionType {
-  collectionName: 'assets_tables';
-  info: {
-    singularName: 'assets';
-    pluralName: 'assets-tables';
-    displayName: 'AssetsTable';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    Aname: Attribute.String;
-    Ainventory: Attribute.Boolean;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::assets.assets',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::assets.assets',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiBlogBlog extends Schema.CollectionType {
-  collectionName: 'blogs';
-  info: {
-    singularName: 'blog';
-    pluralName: 'blogs';
-    displayName: '\u200CBlog';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    bName: Attribute.String;
-    bImg: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    bDesc: Attribute.Text;
-    bDate: Attribute.DateTime;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::blog.blog', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<'api::blog.blog', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-  };
-}
-
-export interface ApiTableusersTableusers extends Schema.CollectionType {
-  collectionName: 'tableuser';
-  info: {
-    singularName: 'tableusers';
-    pluralName: 'tableuser';
-    displayName: 'Users';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    Uname: Attribute.String;
-    Ustatus: Attribute.Boolean;
-    Uassets: Attribute.String;
-    Uposition: Attribute.Enumeration<['user', 'employee', 'manager']>;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::tableusers.tableusers',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::tableusers.tableusers',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -878,6 +788,98 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
+export interface ApiAssetsAssets extends Schema.CollectionType {
+  collectionName: 'assets_tables';
+  info: {
+    singularName: 'assets';
+    pluralName: 'assets-tables';
+    displayName: 'AssetsTable';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Aname: Attribute.String;
+    Ainventory: Attribute.Boolean;
+    Aimage: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::assets.assets',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::assets.assets',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiBlogBlog extends Schema.CollectionType {
+  collectionName: 'blogs';
+  info: {
+    singularName: 'blog';
+    pluralName: 'blogs';
+    displayName: '\u200CBlog';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    bName: Attribute.String;
+    bImg: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    bDesc: Attribute.Text;
+    bDate: Attribute.DateTime;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::blog.blog', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::blog.blog', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiTableusersTableusers extends Schema.CollectionType {
+  collectionName: 'tableuser';
+  info: {
+    singularName: 'tableusers';
+    pluralName: 'tableuser';
+    displayName: 'Users';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Uname: Attribute.String;
+    Ustatus: Attribute.Boolean;
+    Uassets: Attribute.String;
+    Uposition: Attribute.Enumeration<['user', 'employee', 'manager']>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::tableusers.tableusers',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::tableusers.tableusers',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -888,9 +890,6 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::assets.assets': ApiAssetsAssets;
-      'api::blog.blog': ApiBlogBlog;
-      'api::tableusers.tableusers': ApiTableusersTableusers;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
@@ -899,6 +898,9 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
+      'api::assets.assets': ApiAssetsAssets;
+      'api::blog.blog': ApiBlogBlog;
+      'api::tableusers.tableusers': ApiTableusersTableusers;
     }
   }
 }

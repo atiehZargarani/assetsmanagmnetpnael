@@ -13,28 +13,28 @@ import { ColorPreview } from 'src/components/color-utils';
 
 // ----------------------------------------------------------------------
 
-export default function ShopProductCard({ product }) {
-  const renderStatus = (
-    <Label
-      variant="filled"
-      color={(product.status === 'sale' && 'error') || 'info'}
-      sx={{
-        zIndex: 9,
-        top: 16,
-        right: 16,
-        position: 'absolute',
-        textTransform: 'uppercase',
-      }}
-    >
-      {product.status}
-    </Label>
-  );
+export default function ShopProductCard({ asset }) {
+  // const renderStatus = (
+  //   <Label
+  //     variant="filled"
+  //     color={(asset.attributes.Ainventory === false && 'error') || 'success'}
+  //     sx={{
+  //       zIndex: 9,
+  //       top: 16,
+  //       right: 16,
+  //       position: 'absolute',
+  //       textTransform: 'uppercase',
+  //     }}
+  //   >
+  //     {asset.attributes.Ainventory}
+  //   </Label>
+  // );
 
   const renderImg = (
     <Box
       component="img"
-      alt={product.name}
-      src={product.cover}
+      alt={asset.attributes.Aname}
+      src={"http://localhost:1337"+asset.attributes.Aimage.data.attributes.url}
       sx={{
         top: 0,
         width: 1,
@@ -45,40 +45,40 @@ export default function ShopProductCard({ product }) {
     />
   );
 
-  const renderPrice = (
-    <Typography variant="subtitle1">
-      <Typography
-        component="span"
-        variant="body1"
-        sx={{
-          color: 'text.disabled',
-          textDecoration: 'line-through',
-        }}
-      >
-        {product.priceSale && fCurrency(product.priceSale)}
-      </Typography>
-      &nbsp;
-      {fCurrency(product.price)}
-    </Typography>
-  );
+  // const renderPrice = (
+  //   <Typography variant="subtitle1">
+  //     <Typography
+  //       component="span"
+  //       variant="body1"
+  //       sx={{
+  //         color: 'text.disabled',
+  //         textDecoration: 'line-through',
+  //       }}
+  //     >
+  //       {product.priceSale && fCurrency(product.priceSale)}
+  //     </Typography>
+  //     &nbsp;
+  //     {fCurrency(product.price)}
+  //   </Typography>
+  // );
 
   return (
     <Card>
       <Box sx={{ pt: '100%', position: 'relative' }}>
-        {product.status && renderStatus}
+        {/* {product.status && renderStatus} */}
 
         {renderImg}
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
         <Link color="inherit" underline="hover" variant="subtitle2" noWrap>
-          {product.name}
+          {asset.attributes.Aname}
         </Link>
 
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <ColorPreview colors={product.colors} />
+        {/* <Stack direction="row" alignItems="center" justifyContent="space-between">
+          <ColorPreview  />
           {renderPrice}
-        </Stack>
+        </Stack> */}
       </Stack>
     </Card>
   );
