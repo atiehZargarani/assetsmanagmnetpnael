@@ -362,6 +362,37 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiAssetsAssets extends Schema.CollectionType {
+  collectionName: 'assets_tables';
+  info: {
+    singularName: 'assets';
+    pluralName: 'assets-tables';
+    displayName: 'AssetsTable';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Aname: Attribute.String;
+    Ainventory: Attribute.Boolean;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::assets.assets',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::assets.assets',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiBlogBlog extends Schema.CollectionType {
   collectionName: 'blogs';
   info: {
@@ -383,6 +414,40 @@ export interface ApiBlogBlog extends Schema.CollectionType {
     createdBy: Attribute.Relation<'api::blog.blog', 'oneToOne', 'admin::user'> &
       Attribute.Private;
     updatedBy: Attribute.Relation<'api::blog.blog', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiTableusersTableusers extends Schema.CollectionType {
+  collectionName: 'tableuser';
+  info: {
+    singularName: 'tableusers';
+    pluralName: 'tableuser';
+    displayName: 'Users';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Uname: Attribute.String;
+    Ustatus: Attribute.Boolean;
+    Uassets: Attribute.String;
+    Uposition: Attribute.Enumeration<['user', 'employee', 'manager']>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::tableusers.tableusers',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::tableusers.tableusers',
+      'oneToOne',
+      'admin::user'
+    > &
       Attribute.Private;
   };
 }
@@ -823,7 +888,9 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::assets.assets': ApiAssetsAssets;
       'api::blog.blog': ApiBlogBlog;
+      'api::tableusers.tableusers': ApiTableusersTableusers;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;

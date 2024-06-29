@@ -202,7 +202,7 @@ function NavItem({ item }) {
         }),
       }}
     >
-      <Box component="span" sx={{ width: 24, height: 24, mr: 2 }}>
+      <Box component="span" sx={{ width: 24, height: 24, ml: 2 }}>
         {item.icon}
       </Box>
 

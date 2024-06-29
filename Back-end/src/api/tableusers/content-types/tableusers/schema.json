@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tableuser",
+  "info": {
+    "singularName": "tableusers",
+    "pluralName": "tableuser",
+    "displayName": "Users",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Uname": {
+      "type": "string"
+    },
+    "Ustatus": {
+      "type": "boolean"
+    },
+    "Uassets": {
+      "type": "string"
+    },
+    "Uposition": {
+      "type": "enumeration",
+      "enum": [
+        "user",
+        "employee",
+        "manager"
+      ]
+    }
+  }
+}

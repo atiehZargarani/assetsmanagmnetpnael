@@ -39,7 +39,7 @@ export default function AppView() {
   }, [])
 
 
-console.log("kgar",newBlogs)
+
 
   return (
     <Container maxWidth="xl">
@@ -48,16 +48,9 @@ console.log("kgar",newBlogs)
       </Typography>
 
       <Grid container spacing={3}>
-        {/* <Grid xs={12} sm={6} md={3}>
-          <AppWidgetSummary
-            title="Weekly Sales"
-            total={714000}
-            color="success"
-            icon={<img alt="icon" src="/assets/icons/glass/ic_glass_bag.png" />}
-          />
-        </Grid> */}
+     
 
-        <Grid xs={12} sm={6} md={4}>
+        <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
             title="کاربران"
             total={1352831}
@@ -66,7 +59,7 @@ console.log("kgar",newBlogs)
           />
         </Grid>
 
-        <Grid xs={12} sm={6} md={4}>
+        <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
             title="دارایی ها"
             total={1723315}
@@ -75,12 +68,20 @@ console.log("kgar",newBlogs)
           />
         </Grid>
 
-        <Grid xs={12} sm={6} md={4}>
+        <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
             title="اماکن"
             total={234}
             color="error"
             icon={<img alt="icon" src="/assets/icons/glass/ic_glass_message.png" />}
+          />
+        </Grid>
+           <Grid xs={12} sm={6} md={3}>
+          <AppWidgetSummary
+            title="مقالات"
+            total={714000}
+            color="success"
+            icon={<img alt="icon" src="/assets/icons/glass/ic_glass_bag.png" />}
           />
         </Grid>
 
@@ -242,7 +243,7 @@ console.log("kgar",newBlogs)
             list={[
               { id: '1', name: 'اضافه کردن کاربران جدید' },
               { id: '2', name: 'حذف اموال قدیمی' },
-              { id: '3', name: 'خواندن مقالات جدید' },
+              { id: '3', name: 'خواندن مقالات ' },
               { id: '4', name: 'اتمام ویرایش کابران' },
               { id: '5', name: 'ویرایش آواتار' },
               { id: '6', name: 'چک کردن شبکه های مجازی' },

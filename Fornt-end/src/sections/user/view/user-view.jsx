@@ -1,16 +1,19 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
 import Container from '@mui/material/Container';
 import TableBody from '@mui/material/TableBody';
-import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
-
-import { users } from 'src/_mock/user';
+import MenuItem from '@mui/material/MenuItem';
+import axios from 'axios';
+import { FormControl, useFormControlContext } from '@mui/base/FormControl';
 
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
@@ -21,6 +24,7 @@ import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
 import UserTableToolbar from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
+import TextField from '@mui/material/TextField';
 
 // ----------------------------------------------------------------------
 
@@ -37,6 +41,40 @@ export default function UserPage() {
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
+  const [userList, setUserList] = useState([]);
+
+  const [assetsList,setAssetsList]=useState([])
+
+  const [positionList, setPositionList] = useState([
+    {
+      value: 'user',
+      label: 'کاربر',
+    },
+    {
+      value: 'employee',
+      label: 'کارمند',
+    },
+    {
+      value: 'manager',
+      label: 'مدیر',
+    },
+  ]);
+
+  const [openModal, setOpenModal] = useState(false);
+  const handleOpen = () => setOpenModal(true);
+  const handleClose = () => setOpenModal(false);
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 700,
+    bgcolor: 'background.paper',
+    round: 5,
+    boxShadow: 24,
+    p: 4,
+  };
   const handleSort = (event, id) => {
     const isAsc = orderBy === id && order === 'asc';
     if (id !== '') {
@@ -47,7 +85,7 @@ export default function UserPage() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = users.map((n) => n.name);
+      const newSelecteds = userList.map((n) => n.attributes.name);
       setSelected(newSelecteds);
       return;
     }
@@ -56,6 +94,7 @@ export default function UserPage() {
 
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
+    console.log('show index', selectedIndex);
     let newSelected = [];
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, name);
@@ -82,25 +121,80 @@ export default function UserPage() {
   };
 
   const handleFilterByName = (event) => {
+    console.log('show event', event.target.value);
     setPage(0);
     setFilterName(event.target.value);
   };
 
   const dataFiltered = applyFilter({
-    inputData: users,
+    inputData: userList,
     comparator: getComparator(order, orderBy),
     filterName,
   });
 
   const notFound = !dataFiltered.length && !!filterName;
 
+  // const getUsers = () => {
+
+  // };
+
+  const getUsers=()=>{
+    fetch('http://localhost:1337/api/tableuser', {
+      headers: {
+        'Content-type': 'application/json',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('data', data.data);
+        setUserList(data.data);
+        console.log('setUserList', userList);
+      });
+  }
+
+  const getAssets=()=>{
+    fetch('http://localhost:1337/api/assets-tables', {
+      headers: {
+        'Content-type': 'application/json',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('data', data.data);
+        setAssetsList(data.data);
+       
+      });
+  }
+
+
+  useEffect(() => {
+    getUsers()
+    getAssets()
+
+  }, []);
+
+  const [form, setForm] = useState({
+    Uname: 'test',
+    Uposition: 'کاربر معمولی',
+    Ustatus: true,
+    Uassets: 'برگه های اداری',
+  });
+
+const addUser=()=>{
+  console.log("form",form)
+}
   return (
     <Container>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-        <Typography variant="h4">Users</Typography>
+        <Typography variant="h4">کاربران</Typography>
 
-        <Button variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
-          New User
+        <Button
+          variant="contained"
+          color="inherit"
+          onClick={handleOpen}
+          startIcon={<Iconify icon="eva:plus-fill" />}
+        >
+          کاربر جدید
         </Button>
       </Stack>
 
@@ -117,16 +211,15 @@ export default function UserPage() {
               <UserTableHead
                 order={order}
                 orderBy={orderBy}
-                rowCount={users.length}
+                rowCount={userList.length}
                 numSelected={selected.length}
                 onRequestSort={handleSort}
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
-                  { id: 'name', label: 'Name' },
-                  { id: 'company', label: 'Company' },
-                  { id: 'role', label: 'Role' },
-                  { id: 'isVerified', label: 'Verified', align: 'center' },
-                  { id: 'status', label: 'Status' },
+                  { id: 'name', label: 'نام' },
+                  { id: 'position', label: 'سمت' },
+                  { id: 'assets', label: 'اموال' },
+                  { id: 'status', label: 'وضعیت' },
                   { id: '' },
                 ]}
               />
@@ -135,13 +228,12 @@ export default function UserPage() {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => (
                     <UserTableRow
-                      key={row.id}
-                      name={row.name}
-                      role={row.role}
-                      status={row.status}
-                      company={row.company}
+                      key={row.attributes.id}
+                      name={row.attributes.Uname}
+                      position={row.attributes.Uposition}
+                      status={row.attributes.Ustatus}
+                      assets={row.attributes.Uassets}
                       avatarUrl={row.avatarUrl}
-                      isVerified={row.isVerified}
                       selected={selected.indexOf(row.name) !== -1}
                       handleClick={(event) => handleClick(event, row.name)}
                     />
@@ -149,7 +241,7 @@ export default function UserPage() {
 
                 <TableEmptyRows
                   height={77}
-                  emptyRows={emptyRows(page, rowsPerPage, users.length)}
+                  emptyRows={emptyRows(page, rowsPerPage, userList.length)}
                 />
 
                 {notFound && <TableNoData query={filterName} />}
@@ -161,13 +253,77 @@ export default function UserPage() {
         <TablePagination
           page={page}
           component="div"
-          count={users.length}
+          count={userList.length}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
           rowsPerPageOptions={[5, 10, 25]}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Card>
+
+      {openModal && (
+        <div>
+          {/* <Button onClick={handleOpen}>Open modal</Button> */}
+          <Modal
+            open={openModal}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <FormControl defaultValue="" required>
+                <div>
+                  <label>نام کاربری</label>
+                  <TextField
+                    sx={{ textAlign: 'right', width: '100%', my: 2 }}
+                    size="small"
+                    variant="outlined"
+                    onChange={(e)=>{setForm({Uname:e.target.value})}}
+                  />
+                </div>
+                <div>
+                  <label>سمت :</label>
+                  <TextField  size='small' onChange={(e)=>{setForm({Uposition:e.target.value})}} select sx={{ textAlign: 'right', width: '100%', my: 2 }}>
+                    {positionList.map((option, index) => (
+                      <MenuItem key={index} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </div>
+                <div>
+                  <label>اموال :</label>
+                  <TextField size='small' select onChange={(e)=>{setForm({Uassets:e.target.value})}} sx={{ textAlign: 'right', width: '100%', my: 2 }}>
+                    {assetsList.map((asset, index) => (
+                      <MenuItem key={index} value={asset.attributes.Aname}>
+                        {asset.attributes.Aname}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </div>
+                   <div>
+                  <label>وضعیت :</label>
+                  <TextField size='small' onChange={(e)=>{setForm({Ustatus:e.target.value})}} select sx={{ textAlign: 'right', width: '100%', my: 2 }}>
+                  
+                      <MenuItem  value={false}>
+                        غیرفعال
+                      </MenuItem>
+                   
+                      <MenuItem  value={true}>
+                        فعال
+                      </MenuItem>
+                  </TextField>
+                </div>
+                <div style={{display:"flex",justifyContent:"left"}}>
+                  <Button className='px-5' color='success' variant="contained" onClick={addUser}>
+                  ثبت
+                </Button>
+                </div>
+              </FormControl>
+            </Box>
+          </Modal>
+        </div>
+      )}
     </Container>
   );
 }

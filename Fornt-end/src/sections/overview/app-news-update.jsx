@@ -22,7 +22,7 @@ export default function AppNewsUpdate({ title, subheader, list, ...other }) {
       <CardHeader title={title} subheader={subheader} />
 
       <Scrollbar>
-        <Stack spacing={3} sx={{ p: 3, pr: 0 }}>
+        <Stack spacing={3} sx={{ p: 3, pr: 3 }}>
           {list.map((news,index) => (
           <NewsItem key={news.id} news={news} />
           ))}
@@ -31,12 +31,12 @@ export default function AppNewsUpdate({ title, subheader, list, ...other }) {
 
       <Divider sx={{ borderStyle: 'dashed' }} />
 
-      <Box sx={{ p: 2, textAlign: 'right' }}>
+      <Box sx={{ p: 2, textAlign: 'left' }}>
         <Button
         href='/blog'
           size="small"
           color="inherit"
-          endIcon={<Iconify icon="eva:arrow-ios-forward-fill" />}
+          startIcon={<Iconify icon="eva:arrow-ios-forward-fill" />}
         >
          مشاهده همه
         </Button>
@@ -65,7 +65,7 @@ function NewsItem({ news }) {
         sx={{ width: 48, height: 48, borderRadius: 1.5, flexShrink: 0 }}
       />
 
-      <Box sx={{ minWidth: 240, flexGrow: 1 }}>
+      <Box sx={{ minWidth: 240, flexGrow: 1,pr:3 }}>
         <Link color="inherit" variant="subtitle2" underline="hover" noWrap>
           {title}
         </Link>

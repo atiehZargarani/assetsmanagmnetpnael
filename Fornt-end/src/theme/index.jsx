@@ -18,7 +18,7 @@ export default function ThemeProvider({ children }) {
       palette: palette(),
       typography,
       shadows: shadows(),
-      direction: 'rtl',
+      
       customShadows: customShadows(),
       shape: { borderRadius: 8 },
     }),

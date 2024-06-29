@@ -19,10 +19,9 @@ import Iconify from 'src/components/iconify';
 export default function UserTableRow({
   selected,
   name,
+  position,
+  assets,
   avatarUrl,
-  company,
-  role,
-  isVerified,
   status,
   handleClick,
 }) {
@@ -36,6 +35,32 @@ export default function UserTableRow({
     setOpen(null);
   };
 
+  const enumStatus = () => {
+    switch (status) {
+      case true:
+        return 'فعال';
+      case false:
+        return 'غیر فعال';
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  const enumStatusColor = () => {
+    switch (status) {
+      case true:
+        return 'success';
+      case false:
+        return 'error';
+        break;
+
+      default:
+        break;
+    }
+  };
+
   return (
     <>
       <TableRow hover tabIndex={-1} role="checkbox" selected={selected}>
@@ -43,24 +68,20 @@ export default function UserTableRow({
           <Checkbox disableRipple checked={selected} onChange={handleClick} />
         </TableCell>
 
-        <TableCell component="th" scope="row" padding="none">
-          <Stack direction="row" alignItems="center" spacing={2}>
+        <TableCell component="th" scope="row" padding="none" align='center'>
+          <Stack direction="row" alignItems="center" justifyContent="center" spacing={2}>
             <Avatar alt={name} src={avatarUrl} />
-            <Typography variant="subtitle2" noWrap>
+            <Typography variant="subtitle2"  sx={{px:2}} noWrap>
               {name}
             </Typography>
           </Stack>
         </TableCell>
 
-        <TableCell>{company}</TableCell>
+        <TableCell align='center'>{position}</TableCell>
 
-        <TableCell>{role}</TableCell>
+        <TableCell align='center'>{assets}</TableCell>
 
-        <TableCell align="center">{isVerified ? 'Yes' : 'No'}</TableCell>
-
-        <TableCell>
-          <Label color={(status === 'banned' && 'error') || 'success'}>{status}</Label>
-        </TableCell>
+        <TableCell align='center'><Label color={enumStatusColor(status)} sx={{p:2}}>{enumStatus(status)}</Label></TableCell>
 
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>

@@ -18,6 +18,7 @@ export const paper = ({ theme, bgcolor, dropdown }) => ({
   backgroundImage: 'url(/assets/cyan-blur.png), url(/assets/red-blur.png)',
   backgroundRepeat: 'no-repeat, no-repeat',
   backgroundPosition: 'top right, left bottom',
+ 
   backgroundSize: '50%, 50%',
   ...(theme.direction === 'rtl' && {
     backgroundPosition: 'top left, right bottom',

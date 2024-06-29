@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "assets_tables",
+  "info": {
+    "singularName": "assets",
+    "pluralName": "assets-tables",
+    "displayName": "AssetsTable"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Aname": {
+      "type": "string"
+    },
+    "Ainventory": {
+      "type": "boolean"
+    }
+  }
+}
